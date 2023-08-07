@@ -1,0 +1,172 @@
+html {
+    height: 100%;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#171738, #2E1760);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-box {
+    width: 400px;
+    padding: 40px;
+    background: linear-gradient(#006992, #2E1760);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .6);
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeInUp 0.5s forwards, scaleUp 0.3s 0.5s forwards;
+    display: flex;
+    flex-direction: column; /* Align child elements vertically */
+    align-items: center; /* Center child elements horizontally */
+  }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes scaleUp {
+    from {
+      transform: scale(0.9);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  
+  .login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .select-box {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center; /* Center the dropdown */
+  }
+  
+  .select-box select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3f35d3;
+    margin-bottom: 10px;
+    color: #0f0f0f;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .select-box label {
+    color: #5459ec;
+    display:block;
+    margin-bottom: px;
+    transition: 0.2s;
+  }
+  
+  .select-box select:focus,
+  .select-box select:valid {
+    background-color: #4d43dd;
+  }
+  
+  .select-box select:focus ~ label,
+  .select-box select:valid ~ label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  
+  .user-box {
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center; /* Center the input fields */
+  }
+  
+  .user-box input[type="text"],
+  .user-box input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    margin-bottom: 20px;
+    color: #070000;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .user-box label {
+    color: #fff;
+    display: block;
+    margin-bottom: 5px;
+    transition: 0.2s;
+  }
+  
+  .user-box input[type="text"]:focus,
+  .user-box input[type="password"]:focus,
+  .user-box input[type="text"]:valid,
+  .user-box input[type="password"]:valid {
+    background-color: #e1e1e1;
+  }
+  
+  .user-box input[type="text"]:focus ~ label,
+  .user-box input[type="password"]:focus ~ label,
+  .user-box input[type="text"]:valid ~ label,
+  .user-box input[type="password"]:valid ~ label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    color: #007bff;
+  }
+  
+  .forgot-password {
+    display: inline-block;
+    text-align: right;
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    margin-top: 5px;
+    transition: color 0.2s;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+    color: #007bff;
+  }
+  
+  a {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 10px;
+    position: relative;
+  }
+  
+  a:hover {
+    background-color: #0056b3;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+  }
+  
+  /* Add this style for the "Submit" button */
+  .login-box a:last-child {
+    margin-top: 20px;
+  }
+  
