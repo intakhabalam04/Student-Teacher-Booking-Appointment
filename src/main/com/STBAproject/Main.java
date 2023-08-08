@@ -9,6 +9,5 @@ public class Main {
         System.out.println("Intakhab Alam");
         System.out.println("Student-Teacher-Appointment-Booking");
         System.out.println();
-        System.out.println("Hello Intakhab alam");
     }
 }
