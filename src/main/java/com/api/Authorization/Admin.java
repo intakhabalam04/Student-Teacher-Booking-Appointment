@@ -50,6 +50,7 @@ public class Admin extends HttpServlet {
 		} catch (SQLException e) {
 			printWriter.println("Error "+e.getMessage());
 		}
+		
 		if(isValidUser) {
 			if(databasePassword.equals(password) && databaseUserName.equals(userName)) {
 				printWriter.println("Successfully login");
