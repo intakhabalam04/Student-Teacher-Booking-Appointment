@@ -61,14 +61,14 @@ body {
 	position: relative;
 	margin-bottom: 20px;
 	text-align: center;
-	/* Center the dropdown */
+	
 }
 
 .select-box select {
 	width: 100%;
-	/* Adjusted width */
+	
 	padding: 12px 100px 12px 100px;
-	/* Adjusted padding */
+	
 	font-size: 16px;
 	border: none;
 	border-radius: 5px;
@@ -103,7 +103,7 @@ body {
 	position: relative;
 	margin-bottom: 20px;
 	text-align: center;
-	/* Center the input fields */
+	
 }
 
 .user-box input[type="text"],
@@ -153,10 +153,26 @@ body {
 	transition: color 0.2s;
 }
 
-.forgot-password:hover {
-	text-decoration: underline;
-	color: #007bff;
+
+.sign-up-link {
+    color: #f4f6f8; 
+    font-size: 14px;
+    margin-top: 5px;
+    cursor: pointer; 
+    transition: color 0.2s; 
 }
+
+
+.new-user-text {
+    color: white; 
+    margin-right: 30px;
+}
+
+.new-user-text.clicked {
+    color: #f4f6f8;
+}
+
+
 
 a {
 	display: inline-block;
@@ -176,7 +192,6 @@ a:hover {
 	background-color: #0056b3;
 }
 
-/* Add this style for the "Submit" button */
 .login-box a:last-child {
 	margin-top: 20px;
 }
