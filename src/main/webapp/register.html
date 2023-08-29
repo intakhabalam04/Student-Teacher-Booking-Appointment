@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration form</title>
     <link rel="stylesheet" href="register.css">
+   
 </head>
 
 <body>
@@ -17,7 +18,7 @@
             <label>Enter your name</label>
             <br>
             <input type="text" name="fname" id="name2" placeholder="First name" required>
-            <input type="text" name="lname" id="name2" placeholder="Last name" required>
+            <input type="text" name="lname" id="name2" placeholder="Last name">
             <br>
             <br>
             <label>Enter class : </label>
@@ -39,9 +40,8 @@
             <br><br>
             <label>Confirm Password : </label>
             <br>
-            <input type="password" name="confirm password" id="confirmPassword" placeholder="Enter Confirm Password" onsubmit="return validateForm()" required>
+            <input type="password" name="confirm password" id="confirmPassword" placeholder="Enter Confirm Password required"  requiredonsubmit="return validateForm()">
             <br>
-            <span id="passwordError" style="color: red; display: none;">Passwords does not matched</span>
             <br><label>Gender : </label>
             <br>
             <input type="radio" name="gender" id="male" required>
