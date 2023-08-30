@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color:#9b59b6 ;
+    background: linear-gradient(135deg, #3f87a6, #ebf8e1, #f69d3c);
 }
 div.main{
     width: 400px;
@@ -16,13 +16,13 @@ h2{
     font-family: sans-serif;
 }
 div.register{
-    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: rgba(0, 0, 0, 0.5); */
     width: 100%;
     font-size: 18px;
     border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.3);
     box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
-    color: #fff;
+    color: #101010;
 }
 form#register{
     margin: 40px;

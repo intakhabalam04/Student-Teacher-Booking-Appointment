@@ -8,18 +8,23 @@
 </head>
 <body>
     <div class="container">
-        <form class="forgot-password-form" method="post">
-            <h1>Forgot Password</h1>
+        <form action="#"  class="forgot-password-form" method="post">
+            <h1>Forgot Password</h1><br>
             <label for="email"></label>
             <div class="user-box">
             <input type="email" id="email" name="email" placeholder="Email" required>
             </div>
+            <br>
             <div class="user-box">
             <input type="text" id="otp" name="otp" placeholder="Enter Otp"required>
             </div>
+            <button type="otp">Send Otp</button>
+            <br>
+            <br>
             <div class="user-box">
 				<input type="password" id="newpassword" name="password" placeholder="Enter your new password" required>
 			</div>
+            <br>
             <button type="otp">Resend Otp</button>
             <button type="submit">Submit</button>
         </form>
