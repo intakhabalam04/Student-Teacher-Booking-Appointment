@@ -155,12 +155,14 @@ body {
 
 
 .sign-up-link {
-    color: #f4f6f8; 
+    color: #f4f6f8;
     font-size: 14px;
     margin-top: 5px;
-    cursor: pointer; 
-    transition: color 0.2s; 
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+    background-color: transparent; 
 }
+
 
 
 .new-user-text {

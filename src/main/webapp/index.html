@@ -30,9 +30,12 @@
             <a href="forgot-password" class="forgot-password">Forgot Password?</a>
             <br><br>
             <div class="user-box">
-                <span class="new-user-text" id="new-user-text">New user?</span>
-                <span class="sign-up-link">Sign up</span>
-            </div>
+			    <span class="new-user-text" id="new-user-text">New user?</span>
+			    <form action="register" method="post" id="signup-form">
+			        <input type="submit" class="sign-up-link" value="Sign up">
+			    </form>
+			</div>
+
 
         </form>
     </div>
@@ -42,7 +45,7 @@
     signUpSpan.addEventListener('click', (event) => {
         event.preventDefault();
         signUpSpan.classList.add('clicked'); 
-        window.location.href = 'index1.html'; 
+        window.location.href = 'register'; 
     });
 </script>
 
