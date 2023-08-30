@@ -29,8 +29,10 @@ public class Student extends HttpServlet {
 		
 		String databaseUserName=null;
 		String databasePassword=null;
+		String firstName=null;
+		String lastName=null;
 		
-		String query ="SELECT * FROM studentlogin WHERE USERID=?";
+		String query ="SELECT * FROM studentdata WHERE USERID=?";
 		
 		PreparedStatement preparedStatement=null;
 		ResultSet resultSet=null;
@@ -42,17 +44,24 @@ public class Student extends HttpServlet {
 			resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
-				databaseUserName=resultSet.getString(2);
-				databasePassword=resultSet.getString(3);
+				databaseUserName=resultSet.getString("UserId");
+				databasePassword=resultSet.getString("Password");
+				firstName=resultSet.getString("First_Name");
+				lastName=resultSet.getString("Last_Name");
 				isValidUser=true;
 			}
 			
 		} catch (SQLException e) {
 			printWriter.println("Error "+e.getMessage());
 		}
+		
+		String name=firstName+" "+lastName;
+		
 		if(isValidUser) {
 			if(databasePassword.equals(password) && databaseUserName.equals(userName)) {
-				printWriter.println("Successfully login");
+				printWriter.println("Welcome "+name);
+				printWriter.println("\n\nRukja "+name+" Bhosadike mere Frontend Developer Gaand maara raha hai");
+				
 			}else {
 //				printWriter.println("Invalid detais");
 				RequestDispatcher requestDispatcher=request.getRequestDispatcher("index.html");
