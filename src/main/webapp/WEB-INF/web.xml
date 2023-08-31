@@ -29,6 +29,11 @@
 		<servlet-name>register</servlet-name>
 		<servlet-class>com.api.Registeration.Register</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>onregister</servlet-name>
+		<servlet-class>com.api.Registeration.OnRegister</servlet-class>
+	</servlet>
+	
 
 
 
@@ -56,6 +61,10 @@
 	<servlet-mapping>
 		<servlet-name>register</servlet-name>
 		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>onregister</servlet-name>
+		<url-pattern>/onregister</url-pattern>
 	</servlet-mapping>
 
 </web-app>
