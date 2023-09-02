@@ -35,10 +35,30 @@ public class OnRegister extends HttpServlet {
 		int isInserted = CompleteRegistration.completeRegistration(id, firstName, lastName, section, email, mobile,username, password, gender, printWriter);
 		
 		if (isInserted!=0) {
-			printWriter.println("Success");	
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+
+			out.println("<!DOCTYPE html>");
+			out.println("<html>");
+			out.println("<head>");
+			out.println("    <title>Print in Middle of Web Page</title>");
+			out.println("    <style>");
+			out.println("        /* Your CSS code here */");
+			out.println("    </style>");
+			out.println("</head>");
+			out.println("<body style=\"display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; margin: 0; font-family: Arial, sans-serif;\">");
+			out.println("    <div class=\"content\" style=\"padding: 20px; border: 1px solid #ccc; background-color: #f8f8f8; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); text-align: center;\">");
+			out.println("        <h1>Registration Successful</h1>");
+			out.println("        <p>Your registration has been completed successfully.</p>");
+			out.println("    </div>");
+			out.println("</body>");
+
+
+			out.close();
+
 			SendRegistrationEmail.sendEmail(email, username, password);
-			RequestDispatcher requestDispatcher=request.getRequestDispatcher("index.html");
-			requestDispatcher.forward(request, response);
+//			RequestDispatcher requestDispatcher=request.getRequestDispatcher("index.html");
+//			requestDispatcher.forward(request, response);
 			
 		} else {
 			printWriter.println("Failed");
