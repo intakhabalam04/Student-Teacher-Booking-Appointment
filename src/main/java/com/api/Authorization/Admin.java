@@ -53,7 +53,8 @@ public class Admin extends HttpServlet {
 		
 		if(isValidUser) {
 			if(databasePassword.equals(password) && databaseUserName.equals(userName)) {
-				printWriter.println("Successfully login");
+				RequestDispatcher requestDispatcher=request.getRequestDispatcher("admin.html");
+				requestDispatcher.include(request, response);
 			}else {
 //				printWriter.println("Invalid detais");
 				RequestDispatcher requestDispatcher=request.getRequestDispatcher("index.html");
