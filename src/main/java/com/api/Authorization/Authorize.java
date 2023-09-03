@@ -15,6 +15,7 @@ public class Authorize extends HttpServlet {
 		JdbcConnection.getConnection(printWriter);
 		
 		String userType=request.getParameter("user-type");
+		System.out.println("Login");
 		
 		if(userType.equals("admin")) {
 			RequestDispatcher requestDispatcher=request.getRequestDispatcher("admin");

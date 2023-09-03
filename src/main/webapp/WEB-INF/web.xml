@@ -33,6 +33,18 @@
 		<servlet-name>onregister</servlet-name>
 		<servlet-class>com.api.Registeration.OnRegister</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>sendotp</servlet-name>
+		<servlet-class>com.api.Forget.SendOtp</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>otpver</servlet-name>
+		<servlet-class>com.api.Forget.OTPVerify</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>otpverify</servlet-name>
+		<servlet-class>com.api.Forget.OTPVerify</servlet-class>
+	</servlet>
 	
 
 
@@ -66,5 +78,18 @@
 		<servlet-name>onregister</servlet-name>
 		<url-pattern>/onregister</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>sendotp</servlet-name>
+		<url-pattern>/sendotp</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>otpver</servlet-name>
+		<url-pattern>/otpverification</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>otpverify</servlet-name>
+		<url-pattern>/OTPVerify</url-pattern>
+	</servlet-mapping>
+	
 
 </web-app>

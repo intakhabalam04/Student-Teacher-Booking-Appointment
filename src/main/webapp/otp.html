@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="forget.css">
+	<title>Forgot</title>
+</head>
+<body>
+    <div class="container">
+        <form action="otpverification"  class="forgot-password-form" method="post">
+            <h1>Forgot Password</h1><br>
+            <label for="email"></label>
+            <div class="user-box">
+            <input type="email" id="email" name="fEmail" placeholder="Email" required>
+            </div>
+           
+            <div class="user-box">
+			
+            <input type="text" id="otp" name="otp" placeholder="Enter Otp"required>
+            </div>
+          
+            <div class="user-box">
+				<input type="password" id="newpassword" name="fpassword" placeholder="Enter your new password" required>
+			</div>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

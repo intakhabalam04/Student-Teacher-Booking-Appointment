@@ -59,8 +59,27 @@ public class Student extends HttpServlet {
 		
 		if(isValidUser) {
 			if(databasePassword.equals(password) && databaseUserName.equals(userName)) {
-				printWriter.println("Welcome "+name);
-				printWriter.println("\n\nRukja "+name+" Bhosadike mere Frontend Developer Gaand maara raha hai");
+				printWriter.println("<html>");
+				printWriter.println("<head>");
+				printWriter.println("<style>");
+				printWriter.println("  body {");
+				printWriter.println("    display: flex;");
+				printWriter.println("    justify-content: center;");
+				printWriter.println("    align-items: center;");
+				printWriter.println("    height: 100vh;");
+				printWriter.println("    font-size: 24px;");
+				printWriter.println("    font-weight: bold;");
+				printWriter.println("  }");
+				printWriter.println("</style>");
+				printWriter.println("</head>");
+				printWriter.println("<body>");
+				printWriter.println("Welcome " + name + "<br>");
+				printWriter.println("Work in progress: \uD83D\uDEA7"); // "Work in Progress" emoji
+				printWriter.println("</body>");
+				printWriter.println("</html>");
+
+
+
 				
 			}else {
 //				printWriter.println("Invalid detais");
