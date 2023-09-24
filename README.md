@@ -31,7 +31,7 @@ The Student-Teacher Booking Appointment System is a web-based application design
 Before you begin, ensure you have met the following requirements:
 
 - [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-downloads.html)
-- [MongoDB](https://www.mongodb.com/try/download/community)
+- [MySQL]((https://www.mysql.com/))
 
 ## Installation
 
