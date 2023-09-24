@@ -1,4 +1,4 @@
-# Student-Teacher-Booking-Appointment
+
 
 # Student-Teacher Booking Appointment System
 
@@ -40,9 +40,12 @@ Before you begin, ensure you have met the following requirements:
    ```bash
    git clone https://github.com/yourusername/student-teacher-appointment.git
    cd student-teacher-appointment
-Build and run the application:
+   
+   Build and run the application:
 
-./mvnw spring-boot:run
+   ./mvnw spring-boot:run
+
+   ```bash
 
 
 Access the application in your web browser at http://localhost:8080.
@@ -67,7 +70,7 @@ Spring Security
 Spring Data JPA
 Database Management:
 
-MongoDB
+MySQL
 System Architecture
 The application follows a client-server architecture with user roles, including administrators, teachers, and students. For a detailed architecture diagram, refer to System Architecture.
 
