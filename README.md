@@ -41,11 +41,11 @@ Before you begin, ensure you have met the following requirements:
    git clone https://github.com/yourusername/student-teacher-appointment.git
    cd student-teacher-appointment
    
-   Build and run the application:
+Build and run the application:
 
-   ./mvnw spring-boot:run
+./mvnw spring-boot:run
 
-   ```bash
+  
 
 
 Access the application in your web browser at http://localhost:8080.
