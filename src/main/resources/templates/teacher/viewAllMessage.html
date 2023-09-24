@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Messages</title>
+
+    <!-- Add your CSS stylesheets here -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Add specific CSS styles for this page as needed */
+        /* For example, you can style the message list */
+        body, h1, h2, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+        /* Reset some default browser styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styles for the header */
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        /* Styles for the navigation menu */
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFA500;
+        }
+
+        /* Styles for the content */
+        #content {
+            padding: 20px;
+        }
+
+        /* Styles for tables (if used) */
+        .message-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .message-table th, .message-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .message-table th {
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+        }
+
+        /* Additional styles can be added as needed for specific elements and sections */
+
+    </style>
+</head>
+
+<body>
+<header>
+    <h1 th:text="'Welcome, ' + ${currentUser.fullname}">Welcome Teacher</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/teacher/home}" href="#">Home</a></li>
+            <li><a th:href="@{/teacher/viewAllMessage}" href="#">View Messages</a></li>
+            <li><a th:href="@{/teacher/viewallappointment}" href="#">View All Appointments</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div id="content">
+    <h2>View Messages</h2>
+    <!-- Add your message table here -->
+    <table class="message-table">
+        <thead>
+        <tr>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Message</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="messages : ${allMessage}">
+            <td th:text="${messages.studentName}">John Doe</td>
+            <td th:text="${messages.subject}">John Doe</td>
+            <td th:text="${messages.message}">Message content goes here...</td>
+        </tr>
+        <!-- Add more message rows as needed -->
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>

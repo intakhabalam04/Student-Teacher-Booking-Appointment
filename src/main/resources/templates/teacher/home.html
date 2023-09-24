@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Teacher Module</title>
+    <!-- Add your CSS stylesheets here -->
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        /* Reset some default browser styles */
+        body, h1, h2, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            font-size: 24px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .department {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+
+
+        .id {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .email {
+            font-size: 16px;
+            color: #3498db;
+            text-decoration: none;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .email:hover {
+            text-decoration: underline;
+        }
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styles for the sidebar menu */
+        #sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        #sidebar a {
+            padding: 20px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sidebar a:hover {
+            color: #FFA500;
+        }
+
+
+
+        /* Add more styles as needed for specific elements and sections */
+
+    </style>
+</head>
+<body>
+<header>
+    <h1 th:text="'Welcome, '+${currentUser.fullname}">Welcome Teacher</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/teacher/home}" href="#">Home</a></li>
+            <li><a th:href="@{/teacher/viewAllMessage}" href="#">View Messages</a></li>
+            <li><a th:href="@{/teacher/viewallappointment}" href="#">View All Appointments</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="profile-picture">Photo</div>
+    <div th:text="${currentUser.fullname}" class="name">Purna Chandra Pradhan</div>
+    <div th:text="${currentUser.className}" class="department">CSE2C</div>
+    <div th:text="${currentUser.username}" class="id">Student ID: PURNA123</div>
+    <div th:text="${currentUser.mobile}" class="id"></div>
+    <a  th:href="'mailto:'+${currentUser.email}" th:text="${currentUser.email}" class="email">Purna@example.com</a>
+</div>
+
+
+</body>
+</html>

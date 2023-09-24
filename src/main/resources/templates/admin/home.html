@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Module</title>
+<!--    <link rel="stylesheet" href="admin.css">-->
+
+    <style>
+
+        /* Reset some default styles for better consistency */
+        body, h1, h2, h3, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 28px;
+        }
+
+        nav {
+            background-color: #444;
+            color: #fff;
+            padding: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        main {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        /* Style the action buttons in the table */
+        .updateButton, .deleteButton, .approveButton, .rejectButton {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .updateButton:hover, .deleteButton:hover, .approveButton:hover, .rejectButton:hover {
+            background-color: #0056b3;
+        }
+        /* Add this CSS to your stylesheet */
+        a.deleteButton {
+            text-decoration: none; /* Remove underline */
+            /* Add any other styling you want for your "Delete" button here */
+        }
+        .logout-button {
+            float: right;
+            margin-top: 10px;
+        }
+
+        .logout-button button {
+            background-color: #d9534f;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .logout-button button:hover {
+            background-color: #c9302c;
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body>
+<header>
+
+    <div class="logout-button">
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <br>
+    <h1>Admin Module</h1>
+</header>
+<nav>
+    <!-- Add navigation links here if needed -->
+
+
+
+
+</nav>
+<main>
+    <section id="addTeacher">
+        <h2>Add Teacher</h2>
+        <form th:action="@{/admin/addTeacher}" method="post" th:object="${teacherDto}">
+            <label for="teacherName">Name:</label>
+            <input type="text" id="teacherName" name="fullname" th:field="*{fullname}" >
+            <label for="teacherDepartment">Email:</label>
+            <input type="text" id="teacherDepartment" name="email" th:field="*{email}" >
+            <label for="teacherSubject">Subject:</label>
+            <input type="text" id="teacherSubject" name="className" th:field="*{className}" >
+            <input type="hidden" th:field="*{password}">
+            <button type="submit">Add Teacher</button>
+        </form>
+    </section>
+
+    <section id="teacherList">
+        <h2>Teacher List</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Populate this section with teacher data from the backend -->
+            <tr th:each="teacher:${teacherList}">
+                <td th:text="${teacher.id}">Teacher 1</td>
+                <td th:text="${teacher.fullname}">Teacher 1</td>
+                <td th:text="${teacher.email}">Math</td>
+                <td th:text="${teacher.className}">Mathematics</td>
+                <td>
+                    <a th:href="@{/admin/update(id=${teacher.id})}" class="updateButton" role="button">Update</a>
+                    <a th:href="@{/admin/delete/{id}(id=${teacher.id})}" class="deleteButton" role="button">Delete</a>
+                </td>
+            </tr>
+            <!-- Repeat for other teachers -->
+            </tbody>
+        </table>
+    </section>
+
+    <section id="studentApprovalList">
+        <h2>Student Approval List</h2>
+        <table>
+            <thead>
+            <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Populate this section with student approval data from the backend -->
+            <tr th:each="student:${pendingStudent}">
+                <td th:text="${student.fullname}">Student 1</td>
+                <td th:text="${student.email}">student1@example.com</td>
+                <td>
+                    <a th:href="@{/admin/approve/{id}(id=${student.id})}" class="approveButton" role="button">Approve</a>
+                    <a th:href="@{/admin/reject/{id}(id=${student.id})}" class="rejectButton" role="button">Reject</a>
+                </td>
+            </tr>
+            <!-- Repeat for other student approvals -->
+            </tbody>
+        </table>
+    </section>
+
+
+
+</main>
+<footer>
+    <!-- Add footer content here -->
+</footer>
+</body>
+</html>

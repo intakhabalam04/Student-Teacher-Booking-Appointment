@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Toggle Menu</title>
+    <link rel="stylesheet" href="studentPanel.css" type="text/css" />
+    <link rel="stylesheet" href="templates/student/studentProfile.css" type="text/css" />
+</head>
+
+<body>
+    <div id="sidebar">
+        <a href="studentPanel.html">My Account</a>
+        <a href="editProfile.html">Edit Profile</a>
+        <a href="bookAppointment.html">Book Appointment</a>
+        <a href="sendMessage.html">Send Message</a>
+        <a th:href="@{/logout}">Log Out</a>
+
+    </div>
+
+
+    <div id="content">
+        <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+
+    </div>
+
+    <div class="container">
+        <div class="profile-picture">P</div>
+        <div class="name">Purna Chandra Pradhan</div>
+        <div class="department">CSE2C</div>
+        <div class="id">Student ID: PURNA123</div>
+        <a href="mailto:john.doe@example.com" class="email">Purna@example.com</a>
+    </div>
+
+
+
+
+    <script src="studentPanel.js"></script>
+
+
+</body>
+
+</html>

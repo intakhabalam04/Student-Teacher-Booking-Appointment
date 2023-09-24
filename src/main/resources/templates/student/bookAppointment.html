@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Toggle Menu</title>
+    <link rel="stylesheet" href="studentPanel.css" type="text/css" />
+<!--    <link rel="stylesheet" href="bookAppointment.css" type="text/css" />-->
+<!--    <link rel="stylesheet" href="searchTeacher.css" type="text/css" />-->
+
+    <style>
+
+        /* Reset some default styles */
+        body, h1, h2, h3, h4, h5, h6, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* Sidebar styles */
+        #sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+            color: #fff;
+        }
+
+        #sidebar a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #fff;
+            display: block;
+            transition: 0.2s;
+        }
+
+        #sidebar a:hover {
+            background-color: #555;
+        }
+
+        #menu-toggle {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* Content styles */
+        #content {
+            transition: 0.3s;
+            margin-left: 0;
+            padding: 15px;
+        }
+
+        .header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Form styles */
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        label, input, button {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        /* Style for the label */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Style for the select element */
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Style for the select options */
+        select option {
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Style for the select when focused or hovered */
+        select:focus,
+        select:hover {
+            border-color: #555;
+        }
+
+        /* Style for the select when an option is selected */
+        select:valid {
+            border-color: #00cc00; /* You can change this color to indicate a valid selection */
+        }
+
+
+        input[type="text"],
+        input[type="date"],
+        input[type="text"],
+        input[type="time"],
+        button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            #sidebar {
+                width: 0;
+            }
+
+            #content {
+                margin-left: 0;
+            }
+
+            #menu-toggle {
+                display: block;
+            }
+        }
+
+
+
+    </style>
+
+
+</head>
+
+<body>
+<div id="sidebar">
+    <a th:href="@{/student/home}">My Account</a>
+    <a th:href="@{/student/edit(id=${currentUser.id})}">Edit Profile</a>
+    <a th:href="@{/student/bookappointment}" href="bookAppointment.html">Book Appointment</a>
+    <a th:href="@{/student/sendmessage}" href="sendMessage.html">Send Message</a>
+    <a th:href="@{/logout}">Log Out</a>
+</div>
+
+    <div id="content">
+        <br>
+        <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
+    </div>
+
+    <div class="header">
+        <h1>Get Appointment</h1>
+    </div>
+
+    <div class="container">
+        <div>
+            <p th:text="${message}"></p>
+        </div>
+        <form id="searchForm" th:object="${appointmentDetails}" th:action="@{/student/bookappointment}" method="post">
+
+
+            <label for="teacherlist">Teacher List:</label>
+            <select th:field="*{teacherId}" id="teacherlist" name="teacherlist" required>
+                <option  th:each="teacher: ${teacherList}" th:value="${teacher.id}" th:text="${teacher.fullname}+' ( '+${teacher.className}+' ) '"></option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input th:field="*{date}" type="date" id="date" name="date" required>
+
+            <label for="timeFrom">Time From:</label>
+            <input th:field="*{bookingFrom}" type="time" id="timeFrom" name="timeFrom" required>
+
+            <label for="timeTo">Time To:</label>
+            <input th:field="*{bookingTo}" type="time" id="timeTo" name="timeTo" required>
+
+            <label for="subject">Purpose:</label>
+            <textarea th:field="*{purpose}"  id="subject" name="subject" required></textarea>
+
+            <button type="submit">Book</button>
+        </form>
+
+    </div>
+
+<script>
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        if (sidebar.style.width === '250px') {
+            sidebar.style.width = '0';
+            content.style.marginLeft = '0';
+        } else {
+            sidebar.style.width = '250px';
+            content.style.marginLeft = '250px';
+        }
+    }
+
+</script>
+</body>
+
+</html>

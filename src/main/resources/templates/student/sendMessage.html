@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message</title>
+
+    <style>
+        /* Reset some default browser styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Styles for the sidebar menu */
+        #sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #333;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        #sidebar a {
+            padding: 20px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sidebar a:hover {
+            color: #FFA500;
+        }
+
+        #menu-toggle {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        /* Styles for the content */
+        #content {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        /* Styles for the message form */
+        .message-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-form h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .message-form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .message-form input[type="text"],
+        .message-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .message-form button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .message-form button:hover {
+            background-color: #555;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Style for the select options */
+        select option {
+            background-color: #fff;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Style for the select when focused or hovered */
+        select:focus,
+        select:hover {
+            border-color: #555;
+        }
+
+        /* Style for the select when an option is selected */
+        select:valid {
+            border-color: #00cc00; /* You can change this color to indicate a valid selection */
+        }
+    </style>
+</head>
+
+<body>
+<div id="sidebar">
+    <a th:href="@{/student/home}">My Account</a>
+    <a th:href="@{/student/edit(id=${currentUser.id})}">Edit Profile</a>
+    <a th:href="@{/student/bookappointment}" href="bookAppointment.html">Book Appointment</a>
+    <a th:href="@{/student/sendmessage}" href="sendMessage.html">Send Message</a>
+    <a th:href="@{/logout}">Log Out</a>
+</div>
+
+<div id="content">
+    <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
+
+    <div class="message-form">
+        <h2>Send Message</h2>
+        <form th:object="${newMessage}" th:action="@{/student/sendmessage}" action="#" method="post">
+            <label for="teacherlist">Teacher List:</label>
+            <select th:field="*{teacherId}" id="teacherlist" name="teacherlist" required>
+                <option  th:each="teacher: ${teacherList}" th:value="${teacher.id}" th:text="${teacher.fullname}+' ( '+${teacher.className}+' ) '"></option>
+            </select>
+            <label for="subject">Subject:</label>
+            <input th:field="*{subject}" type="text" id="subject" name="subject" required><br>
+
+            <label for="message">Message:</label>
+            <textarea th:field="*{message}" id="message" name="message" rows="4" required></textarea><br>
+
+<!--            <input type="hidden" th:field="*{StudentId}" th:value="${currentUser.id}">-->
+
+            <button type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        if (sidebar.style.width === '250px') {
+            sidebar.style.width = '0';
+            content.style.marginLeft = '0';
+        } else {
+            sidebar.style.width = '250px';
+            content.style.marginLeft = '250px';
+        }
+    }
+</script>
+
+</body>
+
+</html>
