@@ -134,19 +134,26 @@ public class UserServiceImpl implements UserService {
         String currentUsername=authentication.getName();
         return findByUsername(currentUsername);
     }
-
     @Override
     public void generateOtp(String email,boolean isDuplicate) {
         User user=userRepository.findByEmail(email);
+
         Random random=new Random();
         int otp=random.nextInt(10000);
         user.setOtp(otp);
         userRepository.save(user);
+        String msgBody="\n" +
+                "Dear "+user.getUsername()+",\n" +
+                "\n" +
+                "Your one-time password (OTP) for secure access is: "+otp+".Do not share this OTP with anyone for your account's safety.\n" +
+                "\n" +
+                "Sincerely,\n" +
+                "api.pvt.ltd";
         if (!isDuplicate){
-            //send mail
+            Email email1=new Email(email,msgBody,"OTP");
+            emailService.sendMail(email1);
         }
     }
-
     @Override
     public boolean validateOtp(String email, int otp,String userPassword) {
         User user=userRepository.findByEmail(email);
@@ -160,8 +167,6 @@ public class UserServiceImpl implements UserService {
         generateOtp(email,true);
         return false;
     }
-
-
     public void sendMail(UserDto userDto){
         String registrationBody=
                 "Hi, "+userDto.getFullname()+

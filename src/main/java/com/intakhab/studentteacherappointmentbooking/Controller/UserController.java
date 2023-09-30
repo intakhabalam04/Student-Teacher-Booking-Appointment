@@ -71,6 +71,7 @@ public class UserController {
         String viewName="forgot";
         Map<String ,Object> model=new HashMap<>();
         model.put("forgotPass",new User());
+        model.put("otpa","Enter Otp");
         return new ModelAndView(viewName,model);
     }
 
@@ -80,7 +81,6 @@ public class UserController {
         session.setAttribute("forgotEmail",email);
         userService.generateOtp(email,false);
         RedirectView rd=new RedirectView("/otp");
-        System.out.println(session.getAttribute("forgotEmail")+" 1");
         return new ModelAndView(rd);
     }
 

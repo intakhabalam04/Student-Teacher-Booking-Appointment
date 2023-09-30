@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--    <link rel="stylesheet" href="forget.css">-->
-    <title>Forgot</title>
+    <title>Otp</title>
     <style>
 
         body {
@@ -93,19 +93,18 @@
     <div th:if="${message}"   class="result-message" ><p><a th:href="@{/login}">Login</a></p></div>
 
 
-    <form th:object="${forgotPass}" th:action="@{/otp}" action="otpverification"  class="forgot-password-form" method="post">
+    <form th:object="${forgotPass}" th:action="@{/otp}" action="otpverification" class="forgot-password-form" method="post">
         <h1>Forgot Password</h1><br>
         <div class="user-box">
-
-            <input th:field="*{otp}" type="text" id="otp" name="otp" placeholder="Enter Otp"required>
+            <input th:field="*{otp}" th:text="${otpa}" type="text" id="otp" name="otp" placeholder="Enter Otp" required>
         </div>
-
         <div class="user-box">
             <input th:field="*{password}" type="password" id="newpassword" name="fpassword" placeholder="Enter your new password" required>
         </div>
         <br>
         <button type="submit">Submit</button>
     </form>
+
 </div>
 </body>
 </html>
