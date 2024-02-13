@@ -22,9 +22,9 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Autowired
     private EmailService emailService;
     @Override
-    public boolean saveApointment(Appointment appointment) {
+    public void saveAppointment(Appointment appointment) {
         if (appointment.getDate().isBefore(LocalDate.now())){
-            return false;
+            return;
         }
         appointment.setStatus("Pending");
         appointment.setStudentId(userService.getAuthenticatedUser().getId());
@@ -48,7 +48,6 @@ public class AppointmentServiceImpl implements AppointmentService{
         Email email=new Email(teacher.getEmail(),msgBody,"Appointment Request from "+student.getFullname());
         emailService.sendMail(email);
         appointmentRepository.save(appointment);
-        return true;
     }
     @Override
     public List<Appointment> allAppointment(Long id) {
@@ -107,7 +106,7 @@ public class AppointmentServiceImpl implements AppointmentService{
         appointmentRepository.deleteById(id);
     }
     @Override
-    public List<Appointment> getUpcommingAppointment(Long id) {
+    public List<Appointment> getUpcomingAppointment(Long id) {
 //        Implemented code is chatGpt code that is equivalent to the commented code and is used for the sorting according to date
 
 /*

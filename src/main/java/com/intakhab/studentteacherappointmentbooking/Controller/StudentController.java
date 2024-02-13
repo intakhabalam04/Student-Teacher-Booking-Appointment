@@ -7,12 +7,20 @@ import com.intakhab.studentteacherappointmentbooking.Model.User;
 import com.intakhab.studentteacherappointmentbooking.Service.AppointmentService;
 import com.intakhab.studentteacherappointmentbooking.Service.MessageService;
 import com.intakhab.studentteacherappointmentbooking.Service.UserService;
+import jakarta.annotation.Resources;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +80,7 @@ public class StudentController {
 
     @PostMapping("/bookappointment")
     public ModelAndView submitAppointmentForm(@ModelAttribute("appointmentDetails") Appointment appointment){
-        appointmentService.saveApointment(appointment);
+        appointmentService.saveAppointment(appointment);
         RedirectView rd=new RedirectView("/student/home");
         return new ModelAndView(rd);
     }
@@ -92,6 +100,19 @@ public class StudentController {
         messageService.saveMessage(message);
         RedirectView rd=new RedirectView("/student/home");
         return new ModelAndView(rd);
+    }
+
+    @GetMapping("/image")
+    public ResponseEntity<byte[]>getUserProfileImage() throws IOException {
+        User currentUser = securityService.currentUser();
+        char firstLetter = currentUser.getFullname().charAt(0);
+
+        Resource resource = new ClassPathResource("static/img/AlphabetDp/" + firstLetter + ".png");
+
+        byte[] imageBytes = Files.readAllBytes(Path.of(resource.getURI()));
+
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageBytes);
+
     }
 }
 

@@ -22,7 +22,14 @@ public class User {
     private String role;
     private String action;
     private int otp;
-    public User(String fullname, String className, String email, String username, String mobile, String password, String gender, String role, String action) {
+    private String tokenNo;
+    private long tokenGenerationTime;
+    private String emailMobileUsername;
+    @Lob
+    @Column(length = 1048576)
+    private byte[] profileImg;
+
+    public User(String fullname, String className, String email, String username, String mobile, String password, String gender, String role, String action, int otp, String tokenNo, long tokenGenerationTime, String emailMobileUsername) {
         this.fullname = fullname;
         this.className = className;
         this.email = email;
@@ -32,5 +39,9 @@ public class User {
         this.gender = gender;
         this.role = role;
         this.action = action;
+        this.otp = otp;
+        this.tokenNo = tokenNo;
+        this.tokenGenerationTime = tokenGenerationTime;
+        this.emailMobileUsername = emailMobileUsername;
     }
 }

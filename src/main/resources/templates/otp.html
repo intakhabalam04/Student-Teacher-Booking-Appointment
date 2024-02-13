@@ -93,10 +93,10 @@
     <div th:if="${message}"   class="result-message" ><p><a th:href="@{/login}">Login</a></p></div>
 
 
-    <form th:object="${forgotPass}" th:action="@{/otp}" action="otpverification" class="forgot-password-form" method="post">
+    <form th:object="${forgotPass}" th:action="@{/reset_password}" action="otpverification" class="forgot-password-form" method="post">
         <h1>Forgot Password</h1><br>
         <div class="user-box">
-            <input th:field="*{otp}" th:text="${otpa}" type="text" id="otp" name="otp" placeholder="Enter Otp" required>
+            <input th:field="*{tokenNo}" th:text="${otpa}" type="hidden" id="otp" name="otp" placeholder="Enter Otp" required>
         </div>
         <div class="user-box">
             <input th:field="*{password}" type="password" id="newpassword" name="fpassword" placeholder="Enter your new password" required>

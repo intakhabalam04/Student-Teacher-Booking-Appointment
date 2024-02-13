@@ -46,7 +46,7 @@ public class TeacherController {
         Map<String,Object> model=new HashMap<>();
         model.put("allAppointment",allAppointment);
         model.put("currentUser",userService.getAuthenticatedUser());
-        model.put("upcomingAppointment",appointmentService.getUpcommingAppointment(id));
+        model.put("upcomingAppointment",appointmentService.getUpcomingAppointment(id));
         model.put("pastAppointment",appointmentService.getPastAppointment(id));
         return new ModelAndView(viewName,model);
     }

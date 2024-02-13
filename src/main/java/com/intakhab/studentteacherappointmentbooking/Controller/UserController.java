@@ -3,18 +3,15 @@ package com.intakhab.studentteacherappointmentbooking.Controller;
 import com.intakhab.studentteacherappointmentbooking.Model.User;
 import com.intakhab.studentteacherappointmentbooking.Service.UserService;
 import com.intakhab.studentteacherappointmentbooking.dto.UserDto;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -24,12 +21,14 @@ import java.util.Map;
 public class UserController {
 
 
-    @Autowired
-    UserDetailsService userDetailsService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final UserService userService;
+
+
+    public UserController(UserDetailsService userDetailsService, UserService userService) {
+        this.userDetailsService = userDetailsService;
+        this.userService = userService;
+    }
 
     @GetMapping("/home")
     public String home(Model model, Principal principal) {
@@ -71,42 +70,54 @@ public class UserController {
         String viewName="forgot";
         Map<String ,Object> model=new HashMap<>();
         model.put("forgotPass",new User());
-        model.put("otpa","Enter Otp");
         return new ModelAndView(viewName,model);
     }
 
     @PostMapping("/forgot")
-    public ModelAndView submitForgotPage(@ModelAttribute("forgotPass")User user, HttpSession session){
-        String email=user.getEmail();
-        session.setAttribute("forgotEmail",email);
-        userService.generateOtp(email,false);
-        RedirectView rd=new RedirectView("/otp");
-        return new ModelAndView(rd);
-    }
+    public ModelAndView submitForgotPage(@ModelAttribute("forgotPass")User user){
+        String userLoginId=user.getEmailMobileUsername();
 
-    @GetMapping("/otp")
-    public ModelAndView getOtpPage(){
-        String viewName="otp";
+        String viewName="forgot";
         Map<String ,Object> model=new HashMap<>();
-        model.put("forgotPass",new User());
+        User user1 = userService.generateResetToken(userLoginId);
+
+        if (user1!=null){
+            model.put("message","We have sent a reset password link to your email.Please check");
+        }else {
+            model.put("error","Email not found error !!");
+        }
         return new ModelAndView(viewName,model);
     }
 
-    @PostMapping("/otp")
-    public ModelAndView submitOtpPage(@ModelAttribute("forgotPass") User user,HttpSession session){
-        String email=(String) session.getAttribute("forgotEmail");
-        session.removeAttribute("forgotEmail");
-        int otp=user.getOtp();
-        String newPassword=user.getPassword();
-        boolean isChanged= userService.validateOtp(email, otp, newPassword);
-        ModelAndView modelAndView = new ModelAndView("otp"); // Assuming "otp-page" is your template name
-
-        if (isChanged) {
-            modelAndView.addObject("message", "Password changed successfully!");
-        } else {
-            modelAndView.addObject("message", "Failed to change password. Please try again.");
+    @GetMapping("/reset_password")
+    public ModelAndView getResetPage(@RequestParam("token")String token){
+        System.out.println(token+"Token no");
+        User user=userService.findByTokenNo(token);
+        if (user==null || userService.validateToken(token)){
+            return new ModelAndView("invalid");
         }
 
-        return modelAndView;
+        String viewName="otp";
+        Map<String ,Object> model=new HashMap<>();
+        model.put("forgotPass",user);
+        return new ModelAndView(viewName,model);
     }
+
+    @PostMapping("/reset_password")
+    public ModelAndView submitResetPage(@ModelAttribute("forgotPass") User user){
+
+        User user1=userService.findByTokenNo(user.getTokenNo());
+        if (user1==null){
+            return new ModelAndView("invalid");
+        }
+        boolean isChanged= userService.validateTokenAndChangePassword(user1,user.getPassword());
+
+        if (isChanged){
+            return new ModelAndView("success");
+
+        }else {
+            return new ModelAndView("invalid");
+        }
+    }
+
 }

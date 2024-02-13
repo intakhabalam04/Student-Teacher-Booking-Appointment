@@ -4,26 +4,37 @@ import com.intakhab.studentteacherappointmentbooking.Model.Email;
 import com.intakhab.studentteacherappointmentbooking.Model.User;
 import com.intakhab.studentteacherappointmentbooking.Repository.UserRepository;
 import com.intakhab.studentteacherappointmentbooking.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
+    private final long tokenTimeLimit=1*1*30*1000;
     String userPassword=null;
+
+    @Value("${server.port}")
+    private int serverPort;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, EmailService emailService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
+    }
+
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -40,7 +51,7 @@ public class UserServiceImpl implements UserService {
         User user=new User(userDto.getFullname(), userDto.getClassName(),
                 userDto.getEmail(), generateUsername(userDto.getFullname()) , userDto.getMobile(),
                 passwordEncoder.encode(userDto.getPassword()), userDto.getGender(), "STUDENT","Pending"
-        );
+        , 0,"000", 0,"");
         userRepository.save(user);
     }
 
@@ -55,16 +66,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveTeacher(UserDto userDto) {
+    public void saveTeacher(UserDto userDto) {
         userDto.setUsername(generateUsername(userDto.getFullname()));
         userPassword=generatePassword();
         userDto.setPassword(userPassword);
         User user=new User(userDto.getFullname(), userDto.getClassName(),
                 userDto.getEmail(), userDto.getUsername(), userDto.getMobile(),
                 passwordEncoder.encode(userPassword), userDto.getGender(), "TEACHER","Approved"
-        );
+        , 0,"000", 0,"");
         sendMail(userDto);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -135,24 +146,49 @@ public class UserServiceImpl implements UserService {
         return findByUsername(currentUsername);
     }
     @Override
-    public void generateOtp(String email,boolean isDuplicate) {
-        User user=userRepository.findByEmail(email);
+    public User generateResetToken(String userLoginId) {
+        User user=userRepository.findByEmailOrMobileOrUsername(userLoginId,userLoginId,userLoginId);
+        if (user==null)
+            return null;
 
-        Random random=new Random();
-        int otp=random.nextInt(10000);
-        user.setOtp(otp);
+        UUID uuid=UUID.randomUUID();
+        String token=uuid.toString().replace("-","");
+
+        user.setTokenNo(token);
+        user.setTokenGenerationTime(System.currentTimeMillis());
         userRepository.save(user);
-        String msgBody="\n" +
-                "Dear "+user.getUsername()+",\n" +
-                "\n" +
-                "Your one-time password (OTP) for secure access is: "+otp+".Do not share this OTP with anyone for your account's safety.\n" +
-                "\n" +
-                "Sincerely,\n" +
-                "api.pvt.ltd";
-        if (!isDuplicate){
-            Email email1=new Email(email,msgBody,"OTP");
-            emailService.sendMail(email1);
+
+        InetAddress localHost=null;
+        try {
+            localHost=InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());;
         }
+        String link="http://"+ localHost.getHostAddress()+":"+serverPort+"/reset_password?token="+token;
+        System.out.println(link);
+
+        String content =
+                "<html>"+
+                        "<body>"+
+                        "<p>Hello ,"+user.getFullname()+"</p>"
+                        + "<p>You have requested to reset your password.</p>"
+                        + "<p>Click the link below to change your password:</p>"
+                        + "<p><a href=" + link + ">Change my password</a></p>"
+                        + "<br>"
+                        + "<p>Ignore this email if you do remember your password, "
+                        + "or you have not made the request.</p>"+"Sincerely,\n\n" +
+                        "api.pvt.ltd"
+                        + "</body>"
+                        + "</html>";
+
+
+        String subject = "Here's the link to reset your password";
+
+        Email email1 = new Email(user.getEmail(),content,subject);
+
+        emailService.sendMail(email1);
+
+        return user;
     }
     @Override
     public boolean validateOtp(String email, int otp,String userPassword) {
@@ -161,12 +197,41 @@ public class UserServiceImpl implements UserService {
         if (databaseOtp==otp){
             user.setPassword(passwordEncoder.encode(userPassword));
             userRepository.save(user);
-            generateOtp(email,true);
+            generateResetToken(email);
             return true;
         }
-        generateOtp(email,true);
+        generateResetToken(email);
         return false;
     }
+
+    @Override
+    public User findByTokenNo(String token) {
+        return userRepository.findByTokenNo(token);
+    }
+
+    @Override
+    public boolean validateTokenAndChangePassword(User user, String newPassword) {
+
+        if (user.getTokenGenerationTime()+tokenTimeLimit<System.currentTimeMillis()) {
+            return false;
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        UUID uuid=UUID.randomUUID();
+        String tempToken=uuid.toString().replace("-","");
+        user.setTokenNo(tempToken);
+        userRepository.save(user);
+        return true;
+    }
+
+    @Override
+    public boolean validateToken(String token) {
+
+        User user=userRepository.findByTokenNo(token);
+
+        return user != null && user.getTokenGenerationTime() + tokenTimeLimit <= System.currentTimeMillis();
+    }
+
     public void sendMail(UserDto userDto){
         String registrationBody=
                 "Hi, "+userDto.getFullname()+

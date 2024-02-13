@@ -9,13 +9,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-    @Autowired
-    private UserRepository userRepository;
-    public boolean canEditProfile(Long id) {
+    private final UserRepository userRepository;
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
+    public SecurityService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public boolean canEditProfile(Long id) {
+        User user = currentUser();
         User userToEdit = userRepository.findById(id).orElse(null);
-        return userToEdit != null && userToEdit.getUsername().equals(currentUsername);
+        return userToEdit != null && userToEdit.getUsername().equals(user.getUsername());
+    }
+
+    public User currentUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username);
     }
 }

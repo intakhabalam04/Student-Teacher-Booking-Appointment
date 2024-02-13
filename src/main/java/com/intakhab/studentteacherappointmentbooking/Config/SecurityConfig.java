@@ -16,10 +16,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig  {
 
-    @Autowired
-    CustomUserDetailsServices customUserDetailsServices;
-    @Autowired
-    CustomSuccessHandler customSuccessHandler;
+    private final CustomUserDetailsServices customUserDetailsServices;
+    private final CustomSuccessHandler customSuccessHandler;
+
+    public SecurityConfig(CustomUserDetailsServices customUserDetailsServices, CustomSuccessHandler customSuccessHandler) {
+        this.customUserDetailsServices = customUserDetailsServices;
+        this.customSuccessHandler = customSuccessHandler;
+    }
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -30,7 +33,7 @@ public class SecurityConfig  {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/forgot","/otp").permitAll()
+                .requestMatchers("/forgot","/reset_password").permitAll()
                 .requestMatchers("/register", "/home").permitAll() // Allow these endpoints for all users
                 .requestMatchers("/student/**").hasRole("STUDENT")// Require ROLE_STUDENT for /student/** endpoints
                 .requestMatchers("/admin/**").hasRole("ADMIN")     // Require ROLE_ADMIN for /admin/** endpoints

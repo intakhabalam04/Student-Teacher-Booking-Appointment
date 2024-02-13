@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    boolean saveApointment(Appointment appointment);
+    void saveAppointment(Appointment appointment);
     List<Appointment> allAppointment(Long id);
     void approve(Long id);
     void cancel(Long id);
-    List<Appointment> getUpcommingAppointment(Long id);
+    List<Appointment> getUpcomingAppointment(Long id);
     List<Appointment> getPastAppointment(Long id);
 }

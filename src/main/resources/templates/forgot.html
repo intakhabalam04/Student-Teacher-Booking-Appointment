@@ -42,7 +42,7 @@
             color: #555;
         }
         
-        input[type="email"] {
+        input[type="text"] {
             width: 90%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -51,7 +51,7 @@
             transition: border-color 0.3s;
         }
         
-        input[type="email"]:focus {
+        input[type="text"]:focus {
             border-color: #007bff;
             outline: none;
         }
@@ -73,7 +73,6 @@
             background-color: #0056b3;
         }
         
-        /* Optional: Add media queries for responsive design */
         @media (max-width: 768px) {
             .container {
                 max-width: 90%;
@@ -86,9 +85,17 @@
 <div class="container">
     <form th:object="${forgotPass}" th:action="@{/forgot}" action="otp"  class="forgot-password-form" method="post">
         <h1>Forgot Password</h1><br>
-        <label for="email"></label>
+        <div th:if="${error != null}">
+            <p style="text-align: center;color: #dc3545" class="text-danger">[[${error}]]</p>
+        </div>
+        <div th:if="${message != null}">
+            <p style="text-align: center; color: #ffc107" class="text-warning">[[${message}]]</p>
+            <p style="text-align: center;">Click <a href="/login">here</a> to login.</p>
+        </div>
+
+        <label for="loginUserId"></label>
         <div class="user-box">
-            <input th:field="*{email}" type="email" id="email" name="femail" placeholder="Email" required>
+            <input th:field="*{emailMobileUsername}" type="text" id="loginUserId" name="femail" placeholder="Email" required>
         </div>
         <br>
         <div class="user-box">

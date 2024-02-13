@@ -252,12 +252,12 @@
     </div>
     <div th:if="${param.logout}">
         <div class="logout-message">
-            <p> Logout successfull!</p>
+            <p> Logout successfully!</p>
         </div>
     </div>
 
     <h2>Login</h2>
-    <form action="authorize" method="post" th:object="${user}" th:action="@{/login}">
+    <form method="post" th:object="${user}" th:action="@{/login}">
         <div class="user-box">
             <input th:field="*{username}" type="text" id="username" name="uname" placeholder="Enter your username" required>
         </div>
@@ -289,7 +289,7 @@
         window.location.href = 'register';
     });
     function myFunction() {
-        var x = document.getElementById("password");
+        const x = document.getElementById("password");
         if (x.type === "password") {
             x.type = "text";
         } else {

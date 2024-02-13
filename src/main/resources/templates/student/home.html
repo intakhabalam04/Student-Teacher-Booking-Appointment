@@ -10,7 +10,6 @@
 
 
 <style>
-
     /* Reset some default browser styles */
     html, body {
         margin: 0;
@@ -71,7 +70,7 @@
     .profile-picture {
         width: 100px;
         height: 100px;
-        background-color: #3498db;
+        /*background-color: #3498db;*/
         color: #fff;
         text-align: center;
         line-height: 100px;
@@ -108,13 +107,15 @@
     .email:hover {
         text-decoration: underline;
     }
+    .image-container {
+        text-align: center;
+        margin-bottom: 20px; /* Optional: Add margin to create space below the image */
+    }
+
 
 
 </style>
-
-
 </head>
-
 <body>
 <div id="sidebar">
     <a th:href="@{/student/home}">My Account</a>
@@ -123,28 +124,20 @@
     <a th:href="@{/student/sendmessage}" href="sendMessage.html">Send Message</a>
     <a th:href="@{/logout}">Log Out</a>
 </div>
-
-
 <div id="content">
     <div id="menu-toggle" onclick="toggleSidebar()">☰</div>
-
-
 </div>
-
 <div class="container">
-    <div class="profile-picture">Photo</div>
+    <div class="image-container">
+        <img th:src="@{/student/image}" class="profile-picture" alt=""></img>
+    </div>
     <div th:text="${currentUser.fullname}" class="name">Purna Chandra Pradhan</div>
     <div th:text="${currentUser.className}" class="department">CSE2C</div>
     <div th:text="${currentUser.username}" class="id">Student ID: PURNA123</div>
     <div th:text="${currentUser.mobile}" class="id"></div>
     <a  th:href="'mailto:'+${currentUser.email}" th:text="${currentUser.email}" class="email">Purna@example.com</a>
 </div>
-
-
-
-
 <script>
-
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const content = document.getElementById('content');
@@ -156,10 +149,6 @@
             content.style.marginLeft = '250px';
         }
     }
-
 </script>
-
-
 </body>
-
 </html>

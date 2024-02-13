@@ -18,12 +18,15 @@ import java.util.stream.Collectors;
 @Service
 public class CustomUserDetailsServices implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsServices(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String emailPhoneUsername) throws UsernameNotFoundException {
+        User user = userRepository.findByEmailOrMobileOrUsername(emailPhoneUsername,emailPhoneUsername,emailPhoneUsername);
         if (user == null) {
             throw new UsernameNotFoundException("Username or password not found");
         }

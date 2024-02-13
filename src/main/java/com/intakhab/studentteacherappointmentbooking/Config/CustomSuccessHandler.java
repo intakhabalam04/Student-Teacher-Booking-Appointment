@@ -16,6 +16,8 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         Set<String> roles= AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
+        System.out.println(roles);
+
         if (roles.contains("ROLE_ADMIN")){
             response.sendRedirect("/admin/home");
         } else if (roles.contains("ROLE_TEACHER")) {

@@ -17,4 +17,5 @@ public class UserDto {
     private String gender;
     private String role;
     private String action;
+    private String emailMobileUsername;
 }

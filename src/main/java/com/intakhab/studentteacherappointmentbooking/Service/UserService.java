@@ -10,7 +10,7 @@ public interface UserService {
     User findByEmail(String email);
     void saveStudent(UserDto userDto);
     void updateStudent(long id,User user);
-    User saveTeacher(UserDto userDto);
+    void saveTeacher(UserDto userDto);
     List<User> getPendingStudents();
     User findById(Long id);
     void approveStudent(Long id);
@@ -20,6 +20,9 @@ public interface UserService {
     String  generatePassword();
     List<User> getUsersByRole(String roleTeacher);
     User getAuthenticatedUser();
-    void generateOtp(String email  ,boolean isDuplicate  );
+    User generateResetToken(String email);
     boolean validateOtp(String email,int otp,String password);
+    User findByTokenNo(String token);
+    boolean validateTokenAndChangePassword(User byTokenNo, String newPassword);
+    boolean validateToken(String token);
 }
